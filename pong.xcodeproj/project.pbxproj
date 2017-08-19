@@ -13,6 +13,8 @@
 		AE72350F1F48C3DA0076A51C /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = AE72350E1F48C3DA0076A51C /* nice_music.ogg */; };
 		AE7235111F48C3DA0076A51C /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE7235101F48C3DA0076A51C /* sansation.ttf */; };
 		AE7235131F48C3DA0076A51C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7235121F48C3DA0076A51C /* icon.png */; };
+		AE7235211F48C5760076A51C /* Bat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE72351F1F48C5760076A51C /* Bat.cpp */; };
+		AE7235241F48CBA20076A51C /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE7235221F48CBA20076A51C /* Ball.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,10 @@
 		AE72350E1F48C3DA0076A51C /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		AE7235101F48C3DA0076A51C /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		AE7235121F48C3DA0076A51C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		AE72351F1F48C5760076A51C /* Bat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bat.cpp; path = ../Bat.cpp; sourceTree = "<group>"; };
+		AE7235201F48C5760076A51C /* Bat.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Bat.hpp; path = ../Bat.hpp; sourceTree = "<group>"; };
+		AE7235221F48CBA20076A51C /* Ball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ball.cpp; sourceTree = "<group>"; };
+		AE7235231F48CBA20076A51C /* Ball.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ball.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,10 @@
 		AE7235031F48C3DA0076A51C /* pong */ = {
 			isa = PBXGroup;
 			children = (
+				AE7235201F48C5760076A51C /* Bat.hpp */,
+				AE72351F1F48C5760076A51C /* Bat.cpp */,
+				AE7235221F48CBA20076A51C /* Ball.cpp */,
+				AE7235231F48CBA20076A51C /* Ball.hpp */,
 				AE7235061F48C3DA0076A51C /* ResourcePath.mm */,
 				AE7235081F48C3DA0076A51C /* ResourcePath.hpp */,
 				AE7235091F48C3DA0076A51C /* main.cpp */,
@@ -173,6 +183,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE7235241F48CBA20076A51C /* Ball.cpp in Sources */,
+				AE7235211F48C5760076A51C /* Bat.cpp in Sources */,
 				AE72350A1F48C3DA0076A51C /* main.cpp in Sources */,
 				AE7235071F48C3DA0076A51C /* ResourcePath.mm in Sources */,
 			);
