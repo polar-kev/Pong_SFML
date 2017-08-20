@@ -11,8 +11,8 @@
 Ball::Ball(float startX, float startY){
     position.x = startX;
     position.y = startY;
-    xVelocity = 1.2f;
-    yVelocity = 1.2f;
+    xVelocity = 20.2f;
+    yVelocity = 20.2f;
     
     ballShape.setSize(sf::Vector2f(10, 10));
     ballShape.setOutlineColor(sf::Color::White);
@@ -35,13 +35,13 @@ float Ball::getYVelocity(){
 }
 
 void Ball::reboundTopOrBottom(){
-    position.y -= (yVelocity * 30);
+    position.y -= (yVelocity * 1);
     yVelocity = -yVelocity;
 }
 
 //TODO: Better physics calculation
 void Ball::reboundBat(){
-    position.x -= (xVelocity * 30);
+    position.x -= (xVelocity * 1);
     xVelocity = -xVelocity;
 }
     
@@ -50,7 +50,7 @@ void Ball::hitSides(){
     position.y = 200;
 }
 
-void Ball::update(){
+void Ball::update( ){
     position.x += xVelocity;
     position.y += yVelocity;
     ballShape.setPosition(position);

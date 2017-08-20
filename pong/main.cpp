@@ -13,6 +13,7 @@
 // application bundle. To get the path to these resources, use the helper
 // function `resourcePath()` from ResourcePath.hpp
 //
+// Sounds from: http://www.bigsoundbank.com/
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -29,8 +30,18 @@ int main(int, char const**)
 {
     const float windowWidth = 1024;
     const float windowHeight = 768;
+    const int FRAMES_PER_SECOND = 25;
+    const int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
+    int sleepTime = 0;
+    
+    std::string stringPlayer1Score, stringPlayer2Score;
+    
+    sf::Clock clock;
+    float time1 = clock.getElapsedTime().asMilliseconds();
+    
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Pong");
+    window.setFramerateLimit(25);
 
     // Set the Icon
     sf::Image icon;
@@ -39,43 +50,52 @@ int main(int, char const**)
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     
-    
-    int score = 0;
-    int lives = 3;
-    
     //create game objects
     Bat bat (windowWidth-20, windowHeight/2);
     Bat bat2 (10, windowHeight/2);
     Ball ball(windowWidth/2,windowHeight/2);
     
+    int player1Score = 0;
+    int player2Score = 0;
+    
+    
     // Create text and a font
-    sf::Text hud;
+    sf::Text hudLeft;
+    sf::Text hudRight;
     sf::Font font;
+    
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
         return EXIT_FAILURE;
     }
-    hud.setFont(font);
-    hud.setCharacterSize(20);
-    hud.setFillColor(sf::Color::White);
+    
+    hudLeft.setPosition(100, 0);
+    hudLeft.setFont(font);
+    hudLeft.setCharacterSize(40);
+    hudLeft.setFillColor(sf::Color::Green);
+    hudRight.setPosition(windowWidth-100, 0);
+    hudRight.setFont(font);
+    hudRight.setCharacterSize(40);
+    hudRight.setFillColor(sf::Color::Red);
 
-    /*
+    
+    ////////////////////////
+    //MUSIC
+    ///////////////////////
+    
     // Load a music to play
-    sf::Music music;
-    if (!music.openFromFile(resourcePath() + "nice_music.ogg")) {
+    sf::Music sfxHit;
+    sf::Music sfxPoint;
+    if ((!sfxHit.openFromFile(resourcePath() + "magnum.ogg")) ||
+          (!sfxPoint.openFromFile(resourcePath() + "wilhelm.ogg")))
+    {
         return EXIT_FAILURE;
     }
-    */
+
+
+    ////////////////////
+    // GAME LOOP
+    ////////////////////
     
-    /*// Load a sprite to display
-     sf::Texture texture;
-     if (!texture.loadFromFile(resourcePath() + "cute_image.jpg")) {
-     return EXIT_FAILURE;
-     }
-     sf::Sprite sprite(texture);*/
-
-    // Play the music
-    //music.play();
-
     // Start the game loop
     while (window.isOpen())
     {
@@ -87,73 +107,92 @@ int main(int, char const**)
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && bat.getPosition().top > 0){
-                bat.moveUp();
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && (bat.getPosition().top + bat.getPosition().height) <= windowHeight){
-                bat.moveDown();
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W ) && bat2.getPosition().top > 0){
-                bat2.moveUp();
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && (bat2.getPosition().top + bat2.getPosition().height) <= windowHeight){
-                bat2.moveDown();
-            }
-
             // Escape pressed: exit
             if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
                 window.close();
             }
         }
         
+        //////////////////
+        // GET INPUT
+        ///////////////////
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && bat.getPosition().top > 0){
+            bat.moveUp();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && (bat.getPosition().top + bat.getPosition().height) <= windowHeight){
+            bat.moveDown();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W ) && bat2.getPosition().top > 0){
+            bat2.moveUp();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && (bat2.getPosition().top + bat2.getPosition().height) <= windowHeight){
+            bat2.moveDown();
+        }
+
+        
         /////////////////////////
-        //Update the Frame
+        //COLLISION DETECTION
         ////////////////////////
         if(ball.getPosition().top > windowHeight){
             ball.reboundTopOrBottom();
+            sfxHit.play();
         }
         if(ball.getPosition().top < 0){
             ball.reboundTopOrBottom();
+            sfxHit.play();
         }
-        if(ball.getPosition().left < 0 || (ball.getPosition().left + ball.getPosition().width) > windowWidth){
+        if(ball.getPosition().left < 0 ){
             ball.hitSides();
-            if(lives>0) {
-                lives--;
-            }else{
-                lives = 3;
-            }
+            player2Score++;
+            sfxPoint.play();
+            
+        }
+        if((ball.getPosition().left + ball.getPosition().width) > windowWidth){
+            ball.hitSides();
+            player1Score++;
+            sfxPoint.play();
         }
         if(ball.getPosition().intersects(bat.getPosition()) || ball.getPosition().intersects(bat2.getPosition())){
             ball.reboundBat();
+            sfxHit.play();
         }
         
+        /////////////////////////
+        //UPDATE THE FRAME
+        ////////////////////////
         bat.update();
         bat2.update();
         ball.update();
-        
-        std::stringstream ss;
-        ss << "Lives: " << lives;
-        hud.setString(ss.str());
+        stringPlayer1Score = std::to_string(player1Score);
+        stringPlayer2Score = std::to_string(player2Score);
         
         /////////////////////////
-        //Draw the Frame
+        //DRAW THE FRAME
         ////////////////////////
-        
-        
+    
         // Clear screen
         window.clear(sf::Color::Black);
         window.draw(bat.getShape());
         window.draw(bat2.getShape());
         window.draw(ball.getShape());
 
-        // Draw the sprite
-        //window.draw(sprite);
-
-        // Draw the string
-        window.draw(hud);
+        // Draw the text/string stream
+        hudLeft.setString(stringPlayer1Score);
+        hudRight.setString(stringPlayer2Score);
+        window.draw(hudLeft);
+        window.draw(hudRight);
 
         // Update the window
         window.display();
+        
+        //manage framerates
+        time1 += SKIP_TICKS;
+        sleepTime = time1 - clock.getElapsedTime().asMilliseconds();
+        if(sleepTime>=0){
+            sf::sleep(sf::milliseconds(sleepTime));
+        }
+        
+        
     }
 
     return EXIT_SUCCESS;
