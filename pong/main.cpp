@@ -1,5 +1,5 @@
 
-//
+/*
 // Disclaimer:
 // ----------
 //
@@ -22,8 +22,9 @@
 #include "Ball.hpp"
 #include <sstream>
 #include <cstdlib>
+#include "Globals.h"
 
-// Here is a small helper for you! Have a look.
+// File path helper
 #include "ResourcePath.hpp"
 
 int main(int, char const**)

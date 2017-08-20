@@ -15,6 +15,8 @@
 		AE7235131F48C3DA0076A51C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AE7235121F48C3DA0076A51C /* icon.png */; };
 		AE7235211F48C5760076A51C /* Bat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE72351F1F48C5760076A51C /* Bat.cpp */; };
 		AE7235241F48CBA20076A51C /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE7235221F48CBA20076A51C /* Ball.cpp */; };
+		AE72352D1F4925B80076A51C /* magnum.ogg in Resources */ = {isa = PBXBuildFile; fileRef = AE72352B1F4925B80076A51C /* magnum.ogg */; };
+		AE72352E1F4925B80076A51C /* wilhelm.ogg in Resources */ = {isa = PBXBuildFile; fileRef = AE72352C1F4925B80076A51C /* wilhelm.ogg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,9 @@
 		AE7235201F48C5760076A51C /* Bat.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Bat.hpp; path = ../Bat.hpp; sourceTree = "<group>"; };
 		AE7235221F48CBA20076A51C /* Ball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ball.cpp; sourceTree = "<group>"; };
 		AE7235231F48CBA20076A51C /* Ball.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ball.hpp; sourceTree = "<group>"; };
+		AE72352B1F4925B80076A51C /* magnum.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = magnum.ogg; sourceTree = "<group>"; };
+		AE72352C1F4925B80076A51C /* wilhelm.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = wilhelm.ogg; sourceTree = "<group>"; };
+		AE72352F1F49E0A90076A51C /* Globals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,10 +68,11 @@
 		AE7235031F48C3DA0076A51C /* pong */ = {
 			isa = PBXGroup;
 			children = (
+				AE72352F1F49E0A90076A51C /* Globals.h */,
 				AE7235201F48C5760076A51C /* Bat.hpp */,
+				AE7235231F48CBA20076A51C /* Ball.hpp */,
 				AE72351F1F48C5760076A51C /* Bat.cpp */,
 				AE7235221F48CBA20076A51C /* Ball.cpp */,
-				AE7235231F48CBA20076A51C /* Ball.hpp */,
 				AE7235061F48C3DA0076A51C /* ResourcePath.mm */,
 				AE7235081F48C3DA0076A51C /* ResourcePath.hpp */,
 				AE7235091F48C3DA0076A51C /* main.cpp */,
@@ -87,6 +93,8 @@
 		AE72350B1F48C3DA0076A51C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AE72352B1F4925B80076A51C /* magnum.ogg */,
+				AE72352C1F4925B80076A51C /* wilhelm.ogg */,
 				AE72350C1F48C3DA0076A51C /* cute_image.jpg */,
 				AE72350E1F48C3DA0076A51C /* nice_music.ogg */,
 				AE7235101F48C3DA0076A51C /* sansation.ttf */,
@@ -154,8 +162,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE7235131F48C3DA0076A51C /* icon.png in Resources */,
+				AE72352D1F4925B80076A51C /* magnum.ogg in Resources */,
 				AE7235111F48C3DA0076A51C /* sansation.ttf in Resources */,
 				AE72350F1F48C3DA0076A51C /* nice_music.ogg in Resources */,
+				AE72352E1F4925B80076A51C /* wilhelm.ogg in Resources */,
 				AE72350D1F48C3DA0076A51C /* cute_image.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +328,7 @@
 				AE7235181F48C3DA0076A51C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -15,19 +15,18 @@
 class Ball{
 private:
     sf::Vector2f position;
+    sf::Vector2f velocity;
     
     //A RectangleShap object called ref
     sf::RectangleShape ballShape;
     
-    float xVelocity;
-    float yVelocity;
+    void reset();
     
 public:
-    Ball(float startX, float startY);
+    Ball();
     sf::FloatRect getPosition();
     sf::RectangleShape getShape();
-    float getXVelocity();
-    float getYVelocity();
+    sf::Vector2f getVelocity() const;
     void reboundTopOrBottom();
     void reboundBat();
     void hitSides();

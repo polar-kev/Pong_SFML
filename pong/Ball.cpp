@@ -7,6 +7,9 @@
 //
 
 #include "Ball.hpp"
+#include <stdlib.h>
+#include <time.h>
+#include "Globals.h"
 
 Ball::Ball(float startX, float startY){
     position.x = startX;
@@ -16,6 +19,7 @@ Ball::Ball(float startX, float startY){
     
     ballShape.setSize(sf::Vector2f(10, 10));
     ballShape.setOutlineColor(sf::Color::White);
+    ballShape.setPosition(position);
 }
 
 sf::FloatRect Ball::getPosition(){
@@ -26,28 +30,24 @@ sf::RectangleShape Ball::getShape(){
     return ballShape;
 }
 
-float Ball::getXVelocity(){
-    return xVelocity;
+sf::Vector2f Ball::getVelocity() const{
+    return velocity;
 }
 
-float Ball::getYVelocity(){
-    return yVelocity;
-}
-
+//TODO: Implement swept path collision detection
 void Ball::reboundTopOrBottom(){
     //position.y -= (yVelocity * 30);
     yVelocity = -yVelocity;
 }
 
-//TODO: Better physics calculation
+
 void Ball::reboundBat(){
     //position.x -= (xVelocity * 30);
     xVelocity = -xVelocity;
 }
     
 void Ball::hitSides(){
-    position.x = 500;
-    position.y = 200;
+    reset();
 }
 
 void Ball::update(float elapsed){
