@@ -31,7 +31,7 @@ public:
     void reboundTopOrBottom();
     void reboundBat();
     void hitSides();
-    void update();
+    void update(float);
     
 };
 
