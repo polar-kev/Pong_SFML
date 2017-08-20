@@ -7,15 +7,30 @@
 //
 
 #include "Ball.hpp"
+#include <stdlib.h>
+#include <time.h>
+#include "Globals.h"
 
-Ball::Ball(float startX, float startY){
-    position.x = startX;
-    position.y = startY;
-    xVelocity = 20.2f;
-    yVelocity = 20.2f;
+Ball::Ball(){
+    reset();
+}
+
+void Ball::reset(){
+    srand(time(NULL));
+    int direction;
+    int direction2;
+    position.x = rand() % 100 + ((int)WINDOW_WIDTH/2) - 50;//modulo range + inital value
+    position.y = rand() % (int)WINDOW_HEIGHT/2 + 1;//modulo range + inital value
+    velocity.x = rand() % 10 + 5.2;
+    velocity.y = rand() % 10 + 5.2;
+    direction = rand() % 10 + 1;
+    direction2 = rand() % 10 + 1;
+    if(direction>5){velocity.x*=-1;}
+    if(direction2>5){velocity.y*=-1;}
     
     ballShape.setSize(sf::Vector2f(10, 10));
     ballShape.setOutlineColor(sf::Color::White);
+    ballShape.setPosition(position);
 }
 
 sf::FloatRect Ball::getPosition(){
@@ -26,34 +41,33 @@ sf::RectangleShape Ball::getShape(){
     return ballShape;
 }
 
-float Ball::getXVelocity(){
-    return xVelocity;
+sf::Vector2f Ball::getVelocity() const{
+    return velocity;
 }
 
-float Ball::getYVelocity(){
-    return yVelocity;
-}
-
+//TODO: Implement swept path collision detection
 void Ball::reboundTopOrBottom(){
-    position.y -= (yVelocity * 1);
-    yVelocity = -yVelocity;
+    //position.y -= (velocity.y * 1);
+    //velocity.y++;
+    velocity.y = -(velocity.y);
 }
 
-//TODO: Better physics calculation
+
 void Ball::reboundBat(){
-    position.x -= (xVelocity * 1);
-    xVelocity = -xVelocity;
+    //position.x -= (velocity.x * 1);
+    //velocity.x++;
+    //velocity.y++;
+    velocity.x = -(velocity.x*1.05);
 }
     
 void Ball::hitSides(){
-    position.x = 500;
-    position.y = 200;
+    reset();
 }
 
 void Ball::update( ){
-    position.x += xVelocity;
-    position.y += yVelocity;
-    ballShape.setPosition(position);
+    //position += velocity;
+    //ballShape.setPosition(position);
+    ballShape.move(velocity);
 }
 
 

@@ -13,7 +13,7 @@ Bat::Bat(float startX, float startY){
     position.y = startY;
     batSpeed = 0;
     
-    batShape.setSize(sf::Vector2f(10, 300));
+    batShape.setSize(sf::Vector2f(20, 300));
     batShape.setOutlineColor(sf::Color::White);
     batShape.setPosition(position);
 }
@@ -27,11 +27,11 @@ sf::RectangleShape Bat::getShape(){
 }
 
 void Bat::moveDown(){
-    batSpeed+=40;
+    batSpeed+=10;
 }
 
 void Bat::moveUp(){
-    batSpeed-=40;
+    batSpeed-=10;
 }
 
 void Bat::update(){
