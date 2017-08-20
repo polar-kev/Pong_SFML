@@ -19,12 +19,14 @@ private:
     float batSpeed;
     
 public:
+    Bat();
     Bat(float startX, float startY);
     sf::FloatRect getPosition();
     sf::RectangleShape getShape();
     void moveDown();
     void moveUp();
     void update();
+    void setPosition(float x, float y);
 };
 
 #endif /* Bat_hpp */

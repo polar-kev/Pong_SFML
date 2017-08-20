@@ -46,6 +46,7 @@ sf::Vector2f Ball::getVelocity() const{
 }
 
 //TODO: Implement swept path collision detection
+//See: https://gamedev.stackexchange.com/questions/12106/line-rectangle-collision-detection-and-response
 void Ball::reboundTopOrBottom(){
     //position.y -= (velocity.y * 1);
     //velocity.y++;

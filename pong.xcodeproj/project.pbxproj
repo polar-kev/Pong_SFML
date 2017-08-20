@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE1E18951F4A341D00914466 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE1E18931F4A341D00914466 /* Game.cpp */; };
 		AE7235071F48C3DA0076A51C /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE7235061F48C3DA0076A51C /* ResourcePath.mm */; };
 		AE72350A1F48C3DA0076A51C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE7235091F48C3DA0076A51C /* main.cpp */; };
 		AE72350D1F48C3DA0076A51C /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AE72350C1F48C3DA0076A51C /* cute_image.jpg */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE1E18931F4A341D00914466 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		AE1E18941F4A341D00914466 /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
 		AE7235011F48C3DA0076A51C /* pong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE7235051F48C3DA0076A51C /* pong-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pong-Info.plist"; sourceTree = "<group>"; };
 		AE7235061F48C3DA0076A51C /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
@@ -68,13 +71,15 @@
 		AE7235031F48C3DA0076A51C /* pong */ = {
 			isa = PBXGroup;
 			children = (
+				AE7235061F48C3DA0076A51C /* ResourcePath.mm */,
+				AE7235081F48C3DA0076A51C /* ResourcePath.hpp */,
+				AE1E18941F4A341D00914466 /* Game.hpp */,
 				AE72352F1F49E0A90076A51C /* Globals.h */,
 				AE7235201F48C5760076A51C /* Bat.hpp */,
 				AE7235231F48CBA20076A51C /* Ball.hpp */,
+				AE1E18931F4A341D00914466 /* Game.cpp */,
 				AE72351F1F48C5760076A51C /* Bat.cpp */,
 				AE7235221F48CBA20076A51C /* Ball.cpp */,
-				AE7235061F48C3DA0076A51C /* ResourcePath.mm */,
-				AE7235081F48C3DA0076A51C /* ResourcePath.hpp */,
 				AE7235091F48C3DA0076A51C /* main.cpp */,
 				AE72350B1F48C3DA0076A51C /* Resources */,
 				AE7235041F48C3DA0076A51C /* Supporting Files */,
@@ -197,6 +202,7 @@
 				AE7235211F48C5760076A51C /* Bat.cpp in Sources */,
 				AE72350A1F48C3DA0076A51C /* main.cpp in Sources */,
 				AE7235071F48C3DA0076A51C /* ResourcePath.mm in Sources */,
+				AE1E18951F4A341D00914466 /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
