@@ -1,19 +1,35 @@
 
 /*
-// Disclaimer:
-// ----------
-//
-// This code will work only if you selected window, graphics and audio.
-//
-// Note that the "Run Script" build phase will copy the required frameworks
-// or dylibs to your application bundle so you can execute it on any OS X
-// computer.
-//
-// Your resource files (images, sounds, fonts, ...) are also copied to your
-// application bundle. To get the path to these resources, use the helper
-// function `resourcePath()` from ResourcePath.hpp
-//
-// Sounds from: http://www.bigsoundbank.com/
+ // Disclaimer:
+ // ----------
+ //
+ // This code will work only if you selected window, graphics and audio.
+ //
+ // Note that the "Run Script" build phase will copy the required frameworks
+ // or dylibs to your application bundle so you can execute it on any OS X
+ // computer.
+ //
+ // Your resource files (images, sounds, fonts, ...) are also copied to your
+ // application bundle. To get the path to these resources, use the helper
+ // function `resourcePath()` from ResourcePath.hpp
+ //
+ // Sounds from: http://www.bigsoundbank.com/
+ //
+ Future:  Randomly Generate Ball position
+ Create paddle and ball based on screen size
+ Game State MAchine
+ Menu System
+ Sound
+ Difficulty
+ CPU player vs Two player
+ Splash Screen
+ Take button press before starting game
+ Pause menu
+ 
+ */
+
+
+
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -29,18 +45,19 @@
 
 int main(int, char const**)
 {
-    const float windowWidth = 1024;
-    const float windowHeight = 768;
+    const int FRAMES_PER_SECOND = 60;
+    const int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
+    int sleepTime = 0;
     
     std::string stringPlayer1Score, stringPlayer2Score;
     
     sf::Clock clock;
-    float time1;
+    float time1 = clock.getElapsedTime().asMilliseconds();
     
     // Create the main window
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Pong");
-    //window.setFramerateLimit(40);
-    //window.setVerticalSyncEnabled (true);
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Pong");
+    window.setVerticalSyncEnabled(true);
+    //window.setFramerateLimit(100);
     
     // Set the Icon
     sf::Image icon;
@@ -50,9 +67,9 @@ int main(int, char const**)
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     
     //create game objects
-    Bat bat (windowWidth-20, windowHeight/2);
-    Bat bat2 (10, windowHeight/2);
-    Ball ball(0,0);
+    Bat bat (WINDOW_WIDTH-50, WINDOW_HEIGHT/2);
+    Bat bat2 (20, WINDOW_HEIGHT/2);
+    Ball ball;
     
     int player1Score = 0;
     int player2Score = 0;
@@ -71,7 +88,7 @@ int main(int, char const**)
     hudLeft.setFont(font);
     hudLeft.setCharacterSize(40);
     hudLeft.setFillColor(sf::Color::Green);
-    hudRight.setPosition(windowWidth-100, 0);
+    hudRight.setPosition(WINDOW_WIDTH-100, 0);
     hudRight.setFont(font);
     hudRight.setCharacterSize(40);
     hudRight.setFillColor(sf::Color::Red);
@@ -82,14 +99,14 @@ int main(int, char const**)
     ///////////////////////
     
     // Load a music to play
-    /*sf::Music sfxHit;
+    sf::Music sfxHit;
     sf::Music sfxPoint;
     if ((!sfxHit.openFromFile(resourcePath() + "magnum.ogg")) ||
         (!sfxPoint.openFromFile(resourcePath() + "wilhelm.ogg")))
     {
         return EXIT_FAILURE;
     }
-    */
+    
     
     ////////////////////
     // GAME LOOP
@@ -100,7 +117,6 @@ int main(int, char const**)
     {
         // Process events
         sf::Event event;
-        time1 = clock.restart().asSeconds();
         while (window.pollEvent(event))
         {
             // Close window: exit
@@ -119,13 +135,13 @@ int main(int, char const**)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && bat.getPosition().top > 0){
             bat.moveUp();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && (bat.getPosition().top + bat.getPosition().height) <= windowHeight){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && (bat.getPosition().top + bat.getPosition().height) <= WINDOW_HEIGHT){
             bat.moveDown();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W ) && bat2.getPosition().top > 0){
             bat2.moveUp();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && (bat2.getPosition().top + bat2.getPosition().height) <= windowHeight){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && (bat2.getPosition().top + bat2.getPosition().height) <= WINDOW_HEIGHT){
             bat2.moveDown();
         }
         
@@ -133,28 +149,28 @@ int main(int, char const**)
         /////////////////////////
         //COLLISION DETECTION
         ////////////////////////
-        if(ball.getPosition().top >= windowHeight){
+        if(ball.getPosition().top > WINDOW_HEIGHT){
             ball.reboundTopOrBottom();
-            //sfxHit.play();
+            sfxHit.play();
         }
-        if(ball.getPosition().top <= 0){
+        if(ball.getPosition().top < 0){
             ball.reboundTopOrBottom();
-            //sfxHit.play();
+            sfxHit.play();
         }
-        if(ball.getPosition().left <= 0 ){
+        if(ball.getPosition().left < 0 ){
             ball.hitSides();
             player2Score++;
-            //sfxPoint.play();
+            sfxPoint.play();
             
         }
-        if((ball.getPosition().left + ball.getPosition().width) >= windowWidth){
+        if((ball.getPosition().left + ball.getPosition().width) > WINDOW_WIDTH){
             ball.hitSides();
             player1Score++;
-            //sfxPoint.play();
+            sfxPoint.play();
         }
         if(ball.getPosition().intersects(bat.getPosition()) || ball.getPosition().intersects(bat2.getPosition())){
             ball.reboundBat();
-            //sfxHit.play();
+            sfxHit.play();
         }
         
         /////////////////////////
@@ -162,7 +178,7 @@ int main(int, char const**)
         ////////////////////////
         bat.update();
         bat2.update();
-        ball.update(time1);
+        ball.update();
         stringPlayer1Score = std::to_string(player1Score);
         stringPlayer2Score = std::to_string(player2Score);
         
@@ -184,6 +200,14 @@ int main(int, char const**)
         
         // Update the window
         window.display();
+        
+        //manage framerates
+        time1 += SKIP_TICKS;
+        sleepTime = time1 - clock.getElapsedTime().asMilliseconds();
+        if(sleepTime>=0){
+            sf::sleep(sf::milliseconds(sleepTime));
+        }
+        
         
     }
     
