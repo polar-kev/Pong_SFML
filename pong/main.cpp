@@ -46,9 +46,10 @@
 int main(int, char const**)
 {
     Game pongGame;
-    pongGame.initialize();
-    pongGame.setup();
-    pongGame.execute();
+    if(pongGame.initialize())
+    {
+        pongGame.execute();
+    }
     
     return EXIT_SUCCESS;
 }

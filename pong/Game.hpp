@@ -36,8 +36,10 @@ private:
     sf::Text hudLeft;
     sf::Text hudRight;
     sf::Text fps;
-    sf::Text winMessage;
-    sf::Text loseMessage;
+    sf::Text winMessageP1;
+    sf::Text winMessageP2;
+    sf::Text introMessage;
+    sf::Text pauseMessage;
     
     sf::Music sfxHit;
     sf::Music sfxPoint;
@@ -46,9 +48,15 @@ private:
     Bat batLeft;
     Bat batRight;
     
-    enum states {INTRO, PLAYING, P1_WIN, P2_WIN};
+    enum states {INTRO, PLAYING, P1_WIN, P2_WIN, PAUSED};
     
     int gameState;
+    
+    void getInput();
+    void checkCollisions();
+    void update();
+    void draw();
+    void handleEvents();
     
     
 public:
