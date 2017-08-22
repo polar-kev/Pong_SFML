@@ -57,7 +57,8 @@ private:
     void update();
     void draw();
     void handleEvents();
-    
+    void winConditionCheck();
+    void resetGame();
     
 public:
     Game();

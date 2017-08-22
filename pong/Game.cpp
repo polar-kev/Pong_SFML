@@ -10,13 +10,11 @@
 
 Game::Game(){
     initialize();
+    resetGame();
     setup();
 }//end of Game()
 
 bool Game::initialize(){
-    sleepTime = 0;
-    player1Score = 0;
-    player2Score = 0;
     time1 = clock.restart().asMilliseconds();;
     
     
@@ -48,6 +46,7 @@ bool Game::setup(){
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
         return false;
     }
+    sleepTime = 0;
     
     //setup text
     hudLeft.setPosition(100, 0);
@@ -59,7 +58,7 @@ bool Game::setup(){
     hudRight.setCharacterSize(40);
     hudRight.setFillColor(sf::Color::Red);
     
-    introMessage.setString("Get Ready for PONGx. Press any key to begin.");
+    introMessage.setString("PONGx\nPress any key to begin.");
     introMessage.setFont(font);
     introMessage.setCharacterSize(40);
     introMessage.setFillColor(sf::Color::White);
@@ -79,10 +78,9 @@ bool Game::setup(){
     pauseMessage.setCharacterSize(40);
     pauseMessage.setFillColor(sf::Color::White);
     
-    batLeft.setPosition(20, WINDOWHEIGHT/2);
-    batRight.setPosition(WINDOWWIDTH-50, WINDOWHEIGHT/2);
-    
+    //resetGame();
     gameState = states::INTRO;
+
 }//end of setup()
 
 void Game::execute(){
@@ -92,6 +90,7 @@ void Game::execute(){
         handleEvents();
         getInput();
         checkCollisions();
+        winConditionCheck();
         update();
         draw();
         
@@ -172,6 +171,7 @@ void Game::update(){
 void Game::draw(){
     // Clear screen
     window.clear(sf::Color::Black);
+    
     switch(gameState){
         case states::INTRO:
             window.draw(introMessage);
@@ -186,8 +186,10 @@ void Game::draw(){
             window.draw(hudRight);
             break;
         case states::P1_WIN:
+            window.draw(winMessageP1);
             break;
         case states::P2_WIN:
+            window.draw(winMessageP2);
             break;
         case states::PAUSED:
             window.draw(pauseMessage);
@@ -201,6 +203,7 @@ void Game::draw(){
 
 void Game::handleEvents(){
     sf::Event event;
+    
     while (window.pollEvent(event))
     {
         // Close window: exit
@@ -211,11 +214,30 @@ void Game::handleEvents(){
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
             window.close();
         } else if(gameState == states::INTRO && event.type == sf::Event::KeyPressed){
+            resetGame();
             gameState = states::PLAYING;
         }else if(gameState == states::PLAYING && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P){
             gameState = states::PAUSED;
         }else if(gameState == states::PAUSED && event.type == sf::Event::KeyPressed){
-            gameState = states::PLAYING;
+            gameState = states::INTRO;
+        } else if((gameState == states::P1_WIN || gameState == states::P2_WIN) && event.type == sf::Event::KeyPressed){
+            resetGame();
+            gameState = states::INTRO;
         }
     }//end of while
 }//end of handleEvents()
+
+void Game::winConditionCheck(){
+    if(player1Score >= 2 && player1Score >= player2Score + 2){
+        gameState=states::P1_WIN;
+    } else if(player2Score >= 2 && player2Score >= player1Score + 2){
+        gameState=states::P2_WIN;
+    }
+}//end of winConditionCheck()
+
+void Game::resetGame(){
+    batLeft.setPosition(20, WINDOWHEIGHT/2);
+    batRight.setPosition(WINDOWWIDTH-50, WINDOWHEIGHT/2);
+    player1Score = 0;
+    player2Score = 0;
+}//end of resetGame()

@@ -17,14 +17,11 @@
  //
  Future:  Randomly Generate Ball position
  Create paddle and ball based on screen size
- Game State MAchine
  Menu System
  Sound
  Difficulty
  CPU player vs Two player
  Splash Screen
- Take button press before starting game
- Pause menu
  
  */
 

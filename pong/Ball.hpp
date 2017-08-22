@@ -20,8 +20,6 @@ private:
     //A RectangleShap object called ref
     sf::RectangleShape ballShape;
     
-    void reset();
-    
 public:
     Ball();
     sf::FloatRect getPosition();
@@ -31,6 +29,7 @@ public:
     void reboundBat();
     void hitSides();
     void update();
+    void reset();
     
 };
 
