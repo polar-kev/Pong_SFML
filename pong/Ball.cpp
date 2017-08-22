@@ -21,8 +21,8 @@ void Ball::reset(){
     int direction2;
     position.x = rand() % 100 + ((int)WINDOW_WIDTH/2) - 50;//modulo range + inital value
     position.y = rand() % (int)WINDOW_HEIGHT/2 + 1;//modulo range + inital value
-    velocity.x = rand() % 10 + 5.2;
-    velocity.y = rand() % 10 + 5.2;
+    velocity.x = rand() % 5 + 9.2;
+    velocity.y = rand() % 5 + 9.2;
     direction = rand() % 10 + 1;
     direction2 = rand() % 10 + 1;
     if(direction>5){velocity.x*=-1;}

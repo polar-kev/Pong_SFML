@@ -58,25 +58,21 @@ bool Game::setup(){
     hudRight.setCharacterSize(40);
     hudRight.setFillColor(sf::Color::Red);
     
-    introMessage.setString("PONGx\nPress any key to begin.");
-    introMessage.setFont(font);
-    introMessage.setCharacterSize(40);
-    introMessage.setFillColor(sf::Color::White);
+    introMessage.setString("PONGx.");
+    introMessage = formatText(Game::textStyle::NORMAL, introMessage, sf::Color::White, WINDOWHEIGHT/3, 40);
+    
+    pressAnyKey.setString("Press Any Key to Continue.");
+    pressAnyKey = formatText(Game::textStyle::NORMAL, pressAnyKey, sf::Color::White,WINDOWHEIGHT/3 + 50, 30);
+    
     
     winMessageP1.setString("Player 1 Wins");
-    winMessageP1.setFont(font);
-    winMessageP1.setCharacterSize(40);
-    winMessageP1.setFillColor(sf::Color::White);
+    winMessageP1 = formatText(Game::textStyle::NORMAL, winMessageP1, sf::Color::White, WINDOWHEIGHT/3, 40);
     
     winMessageP2.setString("Player 2 Wins");
-    winMessageP2.setFont(font);
-    winMessageP2.setCharacterSize(40);
-    winMessageP2.setFillColor(sf::Color::White);
+    winMessageP2 = formatText(Game::textStyle::NORMAL, winMessageP2, sf::Color::White, WINDOWHEIGHT/3, 40);
     
     pauseMessage.setString("Paused");
-    pauseMessage.setFont(font);
-    pauseMessage.setCharacterSize(40);
-    pauseMessage.setFillColor(sf::Color::White);
+    pauseMessage = formatText(Game::textStyle::NORMAL, pauseMessage, sf::Color::White, WINDOWHEIGHT/3, 40);
     
     //resetGame();
     gameState = states::INTRO;
@@ -175,6 +171,7 @@ void Game::draw(){
     switch(gameState){
         case states::INTRO:
             window.draw(introMessage);
+            window.draw(pressAnyKey);
             break;
         case states::PLAYING:
             window.draw(batLeft.getShape());
@@ -187,12 +184,15 @@ void Game::draw(){
             break;
         case states::P1_WIN:
             window.draw(winMessageP1);
+            window.draw(pressAnyKey);
             break;
         case states::P2_WIN:
             window.draw(winMessageP2);
+            window.draw(pressAnyKey);
             break;
         case states::PAUSED:
             window.draw(pauseMessage);
+            window.draw(pressAnyKey);
             break;
         default:
             break;
@@ -219,7 +219,7 @@ void Game::handleEvents(){
         }else if(gameState == states::PLAYING && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::P){
             gameState = states::PAUSED;
         }else if(gameState == states::PAUSED && event.type == sf::Event::KeyPressed){
-            gameState = states::INTRO;
+            gameState = states::PLAYING;
         } else if((gameState == states::P1_WIN || gameState == states::P2_WIN) && event.type == sf::Event::KeyPressed){
             resetGame();
             gameState = states::INTRO;
@@ -228,9 +228,9 @@ void Game::handleEvents(){
 }//end of handleEvents()
 
 void Game::winConditionCheck(){
-    if(player1Score >= 2 && player1Score >= player2Score + 2){
+    if(player1Score >= 10 && player1Score >= player2Score + 2){
         gameState=states::P1_WIN;
-    } else if(player2Score >= 2 && player2Score >= player1Score + 2){
+    } else if(player2Score >= 10 && player2Score >= player1Score + 2){
         gameState=states::P2_WIN;
     }
 }//end of winConditionCheck()
@@ -241,3 +241,22 @@ void Game::resetGame(){
     player1Score = 0;
     player2Score = 0;
 }//end of resetGame()
+
+int Game::centerText(sf::Text text){
+    sf::FloatRect size = text.getGlobalBounds();
+    int centered = (WINDOWWIDTH/2)-(size.width/2);
+    return centered;
+}//end of centerText()
+
+sf::Text Game::formatText(textStyle style, sf::Text text, sf::Color color, int height, int size){
+    switch(style){
+        case textStyle::NORMAL:
+            text.setFont(font);
+            text.setCharacterSize(size);
+            text.setFillColor(color);
+            text.setPosition(centerText(text), height);
+            return text;
+        case textStyle::TITLE:
+            break;
+    }
+}

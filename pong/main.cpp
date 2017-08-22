@@ -15,13 +15,11 @@
  //
  // Sounds from: http://www.bigsoundbank.com/
  //
- Future:  Randomly Generate Ball position
+ Future:
  Create paddle and ball based on screen size
  Menu System
- Sound
  Difficulty
  CPU player vs Two player
- Splash Screen
  
  */
 

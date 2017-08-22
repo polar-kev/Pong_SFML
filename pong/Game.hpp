@@ -33,22 +33,19 @@ private:
     sf::Image icon;
     
     sf::Font font;
-    sf::Text hudLeft;
-    sf::Text hudRight;
+    sf::Text hudLeft, hudRight;
     sf::Text fps;
-    sf::Text winMessageP1;
-    sf::Text winMessageP2;
-    sf::Text introMessage;
-    sf::Text pauseMessage;
+    sf::Text winMessageP1, winMessageP2, introMessage, pauseMessage;
+    sf::Text pressAnyKey;
     
-    sf::Music sfxHit;
-    sf::Music sfxPoint;
+    sf::Music sfxHit, sfxPoint;
     
     Ball ball;
     Bat batLeft;
     Bat batRight;
     
     enum states {INTRO, PLAYING, P1_WIN, P2_WIN, PAUSED};
+    enum textStyle {TITLE, NORMAL};
     
     int gameState;
     
@@ -59,6 +56,8 @@ private:
     void handleEvents();
     void winConditionCheck();
     void resetGame();
+    sf::Text formatText(textStyle, sf::Text, sf::Color, int height, int size);
+    int centerText(sf::Text);
     
 public:
     Game();
